@@ -1,0 +1,49 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userprefs
+*.psess
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Resharper files
+_ReSharper.*
+
+# Visual Studio code coverage results
+*.opencover.xml
+*.coverage
+*.json
+
+# MSTest test Results
+TestResults/
+
+# Build results of an MSBuild project
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Aa]rtifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# Others
+.Cache
+ClientBin/
+[Ss]tyle[Cc]op.
+~$*
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+*.pubxml
+*.publishproj
+*.user
