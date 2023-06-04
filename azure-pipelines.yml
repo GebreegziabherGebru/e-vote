@@ -11,3 +11,11 @@ steps:
 - task: UseDotNet@2
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+# UNIT Test Section
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    testRunTitle: 'xUNit Test Run'
