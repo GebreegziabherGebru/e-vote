@@ -23,12 +23,24 @@ public class CandidateTests : IDisposable
     {
         //Arrange
 
-
         //Act
         candidate.FirstName = "Gebreegziabher";
 
         //Assert
         Assert.Equal("Gebreegziabher", candidate.FirstName);
+    }
+
+    [Fact]
+    public void CanChangeEmail()
+    {
+        //Arrange
+
+
+        //Act
+        candidate.Email = "gebreegziabher.g.gebru@gmail.com";
+
+        //Assert
+        Assert.Equal("gebreegziabher.g.gebru@gmail.com", candidate.Email);
     }
 
     [Fact]
