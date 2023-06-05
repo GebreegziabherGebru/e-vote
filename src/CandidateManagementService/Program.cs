@@ -47,7 +47,6 @@ builder.Host.UseSerilog((context, config) =>
 });
 
 var app = builder.Build();
-//bool cmdLineInit = (app.Configuration["INITDB"] ?? "false") == "true";
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -70,6 +69,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-//if (!cmdLineInit)
 app.Run();
