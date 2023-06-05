@@ -17,16 +17,17 @@ builder.Services.Configure<MvcNewtonsoftJsonOptions>(opts =>
     = Newtonsoft.Json.NullValueHandling.Ignore;
 });
 
-// builder.Services.Configure<JsonOptions>(opts =>
-// {
-//     opts.JsonSerializerOptions.DefaultIgnoreCondition
-//     = JsonIgnoreCondition.WhenWritingNull;
-// });
-
 var connectionBuilder = new NpgsqlConnectionStringBuilder();
 connectionBuilder.ConnectionString = builder.Configuration["ConnectionStrings:CandidatesManagementConnection"];
 connectionBuilder.Username = builder.Configuration["UserID"];
 connectionBuilder.Password = builder.Configuration["Password"];
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.SetMinimumLevel(LogLevel.Debug);
+    loggingBuilder.AddConsole();
+    loggingBuilder.AddDebug();
+});
 
 builder.Services.AddDbContext<CandidatesManagementDbContext>(opts =>
 {
@@ -35,10 +36,8 @@ builder.Services.AddDbContext<CandidatesManagementDbContext>(opts =>
 });
 
 builder.Services.AddCors();
-
 builder.Services.AddTransient<InitialDataSeeder>();
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //Change the default asp.net logger. Serilog is structured!
@@ -48,11 +47,10 @@ builder.Host.UseSerilog((context, config) =>
 });
 
 var app = builder.Build();
-
 //bool cmdLineInit = (app.Configuration["INITDB"] ?? "false") == "true";
-
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 using (var scope = app.Services.CreateScope())
 {
@@ -70,7 +68,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.UseMvc();
 
 app.MapControllers();
 

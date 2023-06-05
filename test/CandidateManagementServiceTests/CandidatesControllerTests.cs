@@ -238,7 +238,6 @@ public class CandidatesControllerTests : IDisposable
     {
         //Arrange 
         mockRepo.Setup(repo => repo.FindByIdAsync(0)).ReturnsAsync(() => null);
-
         var controller = new CandidatesController(mockRepo.Object);
 
         //Act
@@ -258,7 +257,6 @@ public class CandidatesControllerTests : IDisposable
     {
         //Arrange 
         mockRepo.Setup(repo => repo.FindByIdAsync(1)).ReturnsAsync(GetCandidate());
-
         var controller = new CandidatesController(mockRepo.Object);
 
         //Act
@@ -273,7 +271,6 @@ public class CandidatesControllerTests : IDisposable
     {
         //Arrange 
         mockRepo.Setup(repo => repo.FindByIdAsync(1)).ReturnsAsync(() => null);
-
         var controller = new CandidatesController(mockRepo.Object);
 
         //Act
