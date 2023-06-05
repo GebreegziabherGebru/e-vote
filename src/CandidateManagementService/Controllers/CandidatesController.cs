@@ -18,7 +18,6 @@ namespace CandidateManagementService.Controllers
             this.repository = repository;
         }
 
-
         [HttpGet("{id}", Name = "FindById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -31,6 +30,7 @@ namespace CandidateManagementService.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CandidateResponseDto>>> FindAll()
         {
             return Ok(await repository.FindAllAsync());
@@ -51,6 +51,7 @@ namespace CandidateManagementService.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CandidateResponseDto>> Update(long id, [FromBody] CandidateRequestDto candidateDto)
         {
             var candidate = await repository.FindByIdAsync(id);
@@ -77,6 +78,7 @@ namespace CandidateManagementService.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> Delete()
         {
             await repository.DeleteAllAsync();

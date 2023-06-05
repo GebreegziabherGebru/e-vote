@@ -49,28 +49,29 @@ builder.Host.UseSerilog((context, config) =>
 
 var app = builder.Build();
 
-bool cmdLineInit = (app.Configuration["INITDB"] ?? "false") == "true";
-if (app.Environment.IsDevelopment() || cmdLineInit)
+//bool cmdLineInit = (app.Configuration["INITDB"] ?? "false") == "true";
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var dbContext = scope.ServiceProvider.GetRequiredService<CandidatesManagementDbContext>();
 
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<CandidatesManagementDbContext>();
+    // Apply any pending migrations
+    dbContext.Database.Migrate();
 
-        // Apply any pending migrations
-        dbContext.Database.Migrate();
-
-        var initialDataSeeder = scope.ServiceProvider.GetRequiredService<InitialDataSeeder>();
-        initialDataSeeder.SeedData();
-    }
+    var initialDataSeeder = scope.ServiceProvider.GetRequiredService<InitialDataSeeder>();
+    initialDataSeeder.SeedData();
 }
+
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
 
-if (!cmdLineInit)
-    app.Run();
+//if (!cmdLineInit)
+app.Run();
