@@ -47,6 +47,7 @@ builder.Host.UseSerilog((context, config) =>
 });
 
 var app = builder.Build();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
